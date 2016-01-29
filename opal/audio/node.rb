@@ -1,3 +1,5 @@
+require 'audio/param_schedule'
+
 module Audio
   module Node
     class Base
@@ -13,7 +15,7 @@ module Audio
         elsif value.nil? || value == true
           `#@native[#{name}].value`
         elsif value == false
-          `#@native[#{name}]`
+          Audio::ParamSchedule.new(`#@native[#{name}]`)
         else
           super
         end

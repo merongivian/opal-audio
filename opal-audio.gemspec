@@ -18,4 +18,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency "opal", ">= 0.7.0", "<= 0.9.0"
+  spec.add_dependency 'opal-rspec', '~> 0.5'
 end

@@ -37,5 +37,9 @@ module Audio
     def curve(values, time_hash)
       `#@native.setValueCurveAtTime(values, #{time_hash[:start_time]}, #{time_hash[:time_constant]})`
     end
+
+    def to_f
+      `#{@native}.value`
+    end
   end
 end
