@@ -21,8 +21,17 @@ describe Audio::Node do
   end
 
   describe 'writer methods' do
-    xit 'returns' do
-      # expect(Audio::Context.dynamics_compressor.frequency(false).to_f).to eq frequency
+    let(:biquad_filter) { Audio::Context.new.biquad_filter }
+
+    it 'sets raw values' do
+      expect { biquad_filter.detune = 2 }
+        .to change { biquad_filter.detune }.from(0).to(2)
+    end
+
+    it 'also sets audioparam values' do
+      expect do
+        biquad_filter.frequency = Audio::Context.new.oscillator.frequency(false)
+      end.to change { biquad_filter.frequency }.from(350).to(440)
     end
   end
 end

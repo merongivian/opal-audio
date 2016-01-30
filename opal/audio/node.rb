@@ -11,7 +11,7 @@ module Audio
 
       def method_missing(name, value = nil)
         if name.end_with? '='
-          `#@native[#{name.delete '='}].value = value`
+          `#@native[#{name.delete '='}].value = #{value.to_f}`
         elsif value.nil? || value == true
           `#@native[#{name}].value`
         elsif value == false
