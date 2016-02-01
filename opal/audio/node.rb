@@ -5,8 +5,9 @@ module Audio
     class Base
       include Native
 
-      def initialize(native)
-        @native = native
+      def initialize(audio_context)
+        method_name = "create#{self.class.name.split('::').last}"
+        super `#{audio_context.to_n}[#{method_name}]()`
       end
 
       def method_missing(name, value = nil)
@@ -45,9 +46,6 @@ module Audio
     end
 
     class Gain < Base
-      def initialize(audio_context)
-        super `#{audio_context.to_n}.createGain()`
-      end
     end
 
     class Oscillator < Base
@@ -57,10 +55,6 @@ module Audio
       alias_native :stop
 
       alias_native :periodic_wave=, :setPeriodicWave
-
-      def initialize(audio_context)
-        super `#{audio_context.to_n}.createOscillator()`
-      end
 
       def type=(type)
         unless TYPES.include?(type)
@@ -80,27 +74,16 @@ module Audio
     end
 
     class Delay < Base
-      def initialize(audio_context, max_time = 1)
-        super `#{audio_context.to_n}.createDelay(max_time)`
-      end
     end
 
     class DynamicsCompressor < Base
-
       alias_native :reduction
-
-      def initialize(audio_context)
-        super `#{audio_context.to_n}.createDynamicsCompressor()`
-      end
     end
 
     class BiquadFilter < Base
 
       TYPES = %i(lowpass highpass bandpass lowshelf highshelf peaking notch allpass)
 
-      def initialize(audio_context)
-        super `#{audio_context.to_n}.createBiquadFilter()`
-      end
 
       def type=(type)
         unless TYPES.include?(type)
@@ -116,12 +99,7 @@ module Audio
     end
 
     class StereoPanner < Base
-
       alias_native :normalize
-
-      def initialize(audio_context)
-        super `#{audio_context.to_n}.createStereoPanner()`
-      end
     end
   end
 end
