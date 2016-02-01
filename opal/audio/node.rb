@@ -84,7 +84,6 @@ module Audio
 
       TYPES = %i(lowpass highpass bandpass lowshelf highshelf peaking notch allpass)
 
-
       def type=(type)
         unless TYPES.include?(type)
           raise ArgumentError, "type #{type} doesn't exists"
