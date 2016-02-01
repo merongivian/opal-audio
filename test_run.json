@@ -1,0 +1,13 @@
+{
+    "Audio::Node reader methods": {
+        "returns a raw value": "PASSED"
+    },
+    "Audio::Node reader methods for audioparam values": {
+        "returns audio params for especial values": "PASSED",
+        "returns the same raw value": "PASSED"
+    },
+    "Audio::Node writer methods": {
+        "sets raw values": "PASSED",
+        "also sets audioparam values": "PASSED"
+    }
+}

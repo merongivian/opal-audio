@@ -1,3 +1,13 @@
-language: ruby
-rvm:
-  - 2.1.2
+language: node_js
+node_js:
+  - 4.1
+
+before_install:
+  - rvm install 2.2.4
+  - gem install bundler
+  - unset RAILS_ENV
+  - bundle install
+
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start

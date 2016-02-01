@@ -1,0 +1,28 @@
+{
+  "name": "opal-audio",
+  "version": "0.0.1",
+  "description": "Ruby wrapper around web audio api",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/karma/bin/karma start karma.conf.js --browsers Firefox --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merongivian/opal-audio.git"
+  },
+  "keywords": [
+    "audio"
+  ],
+  "author": "Jose Anasco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/merongivian/opal-audio/issues"
+  },
+  "homepage": "https://github.com/merongivian/opal-audio#readme",
+  "devDependencies": {
+    "karma": "^0.13.19",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-spec-json-reporter": "0.0.8",
+    "karma-opal-rspec": "1.0.10"
+  }
+}
