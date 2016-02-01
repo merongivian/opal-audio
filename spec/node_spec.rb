@@ -34,4 +34,46 @@ describe Audio::Node do
       end.to change { biquad_filter.frequency }.from(350).to(440)
     end
   end
+
+  describe '#connect' do
+    xit 'connects to a node' do
+      audio_context = Audio::Context.new
+
+      oscillator_node = audio_context.oscillator
+      delay_node      = audio_context.delay
+
+      expect { oscillator_node.connect delay_node }
+        .to change { oscillator_node.inputs_quantity }.from(0).to(1)
+    end
+
+    it 'throws an error when connecting to a node from another context' do
+      base_node = Audio::Context.new.oscillator
+      node_from_other_context = Audio::Context.new.gain
+
+      expect { base_node.connect node_from_other_context }
+        .to raise_error(
+          ArgumentError,
+          'Destination node must be from the same audio context'
+        )
+    end
+
+    xit 'connects to an audio param' do
+    end
+  end
+
+  describe '#disconnect' do
+    describe 'with a destination node' do
+      xit'disconnects from it' do
+      end
+
+      xit'disconnects from a node with an especific output index' do
+      end
+
+      xit'disconnects from a node with an especific output and input index' do
+      end
+    end
+
+    xit'disconnects from all available connections' do
+    end
+  end
 end
