@@ -1,5 +1,4 @@
 require 'native'
-
 require 'audio/node'
 
 module Audio
