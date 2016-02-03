@@ -5,9 +5,17 @@ module Audio
     class Base
       include Native
 
+      alias_native :inputs_limit, :numberOfInputs
+      alias_native :outputs_limit, :numberOfOutputs
+
+      attr_reader :audio_context, :connections, :output, :input
+
       def initialize(audio_context)
+        @audio_context = audio_context
+        @input, @output = nil
+
         method_name = "create#{self.class.name.split('::').last}"
-        super `#{audio_context.to_n}[#{method_name}]()`
+        super `#{@audio_context.to_n}[#{method_name}]()`
       end
 
       def method_missing(name, value = nil)
@@ -27,22 +35,42 @@ module Audio
       end
 
       def connect(destination)
-        `#@native.connect(#{Native.convert(destination)})`
-      end
-
-      def disconnect(destination = nil, options = {})
-        destination = Native.try_convert(destination)
-        output      = options[:output] || 0
-        input       = options[:input]  || 0
-
-        if options.any?
-          `#@native.disconnect(#{destination}, #{output}, #{input}) || nil`
-        elsif destination
-          `#@native.disconnect(#{destination})`
-        else
-          `#@native.disconnect()`
+        case destination
+        when Node::Base then node_connector(destination)
+        when ParamSchedule then connector(destination)
+        else fail ArgumentError, 'Destination must be a Node or ParamSchedule'
         end
       end
+
+      def disconnect(destination = nil)
+        `#@native.disconnect(#{Native.convert(destination)})`
+        @output = nil
+
+        if destination && destination.is_a?(Node::Base)
+          destination.input = nil
+        end
+      end
+
+      private
+
+      def node_connector(node)
+        if node.audio_context != @audio_context
+          fail ArgumentError, 'Destination must be ' \
+                              'from the same audio context'
+        end
+
+        connector(node)
+        node.input = self
+      end
+
+      def connector(destination)
+        `#@native.connect(#{Native.convert(destination)})`
+        @output = destination
+      end
+
+      protected
+
+      attr_writer :input
     end
 
     class Gain < Base

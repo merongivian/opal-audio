@@ -25,7 +25,7 @@ module Audio
       Node::Oscillator.new(self)
     end
 
-    def delay(max_time)
+    def delay(max_time = 0)
       Node::Delay.new(self, max_time)
     end
 
