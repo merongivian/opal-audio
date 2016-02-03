@@ -69,14 +69,6 @@ describe Audio::Node do
           'Destination must be from the same audio context'
         )
     end
-
-    it 'throws an error when connecting to invalid objects' do
-      Any = Class.new
-      expect { base_node.connect(Any.new) }.to raise_error(
-        ArgumentError,
-        'Destination must be a Node or ParamSchedule'
-      )
-    end
   end
 
   describe '#disconnect' do

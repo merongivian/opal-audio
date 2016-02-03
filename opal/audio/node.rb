@@ -34,11 +34,11 @@ module Audio
         `#@native[#{method.delete('=')}] != null`
       end
 
-      def connect(destination)
-        case destination
-        when Node::Base then node_connector(destination)
-        when ParamSchedule then connector(destination)
-        else fail ArgumentError, 'Destination must be a Node or ParamSchedule'
+      def connect(to)
+        case to
+        when Node::Base then node_connector(to)
+        when ParamSchedule then connector(to)
+        else `#@native.connect(#{Native.try_convert(to)})`
         end
       end
 
